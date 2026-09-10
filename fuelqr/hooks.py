@@ -182,9 +182,9 @@ app_license = "mit"
 # ------------------------------
 #
 # Specify custom mixins to extend the standard doctype controller.
-# extend_doctype_class = {
-# 	"Task": "fuelqr.custom.task.CustomTaskMixin"
-# }
+extend_doctype_class = {
+	"Custom Field": "fuelqr.overrides.custom_field.CustomCustomField"
+}
 
 # Overriding Methods
 # ------------------------------
