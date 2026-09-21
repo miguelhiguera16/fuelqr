@@ -1,0 +1,113 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-16 07:52:57.419679",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "fuel_dispatch",
+  "column_break_inxf",
+  "fuel_ticket",
+  "column_break_bigl",
+  "vehicle",
+  "column_break_oobt",
+  "qty_dispatched",
+  "section_break_gigg",
+  "uom",
+  "column_break_fadr",
+  "dispatched_at",
+  "column_break_sqxd",
+  "user"
+ ],
+ "fields": [
+  {
+   "fieldname": "fuel_dispatch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Despacho",
+   "options": "Fuel Dispatch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_inxf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "fuel_ticket",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Ticket",
+   "options": "Fuel Ticket",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_bigl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Veh\u00edculo",
+   "options": "Vehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_oobt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qty_dispatched",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cantidad Despachada",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_gigg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Unidad de Medida",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_fadr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dispatched_at",
+   "fieldtype": "Datetime",
+   "label": "Despachado En"
+  },
+  {
+   "fieldname": "column_break_sqxd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Despachador",
+   "options": "User"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-16 08:27:18.496762",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Fuel Closing Dispatch Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

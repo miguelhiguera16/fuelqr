@@ -1,0 +1,168 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-10 16:34:15.069421",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "series_prefix",
+  "default_validity_days",
+  "dispatch_tolerance_pct",
+  "temp_correction_factor",
+  "column_break_zvzp",
+  "allow_partial_dispatch",
+  "apply_temp_correction",
+  "days_before_expiry_alert",
+  "default_fuel_warehouse",
+  "max_daily_variance_pct",
+  "section_break_nihu",
+  "qr_key_id",
+  "max_failed_scans",
+  "column_break_nfah",
+  "dispatch_session_ttl",
+  "low_stock_threshold"
+ ],
+ "fields": [
+  {
+   "default": "COM",
+   "description": "Prefijo usado para la numeraci\u00f3n correlativa de los tickets. Ejemplo: COM genera COM-2026-000001",
+   "fieldname": "series_prefix",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Prefijo de Serie",
+   "reqd": 1
+  },
+  {
+   "description": "Cantidad de d\u00edas que tendr\u00e1 vigencia un ticket desde su emisi\u00f3n si no se especifica otra fecha",
+   "fieldname": "default_validity_days",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Vigencia por Defecto (D\u00edas)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "description": "Porcentaje m\u00e1ximo que se puede despachar por encima de la cantidad autorizada. Ej: 2% sobre 100L permite hasta 102L",
+   "fieldname": "dispatch_tolerance_pct",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Tolerancia de Despacho (%)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "description": "Factor de ajuste por grado Celsius sobre 15\u00b0C seg\u00fan est\u00e1ndar ASTM. Valor t\u00edpico: 0.001 (0.1% por grado)",
+   "fieldname": "temp_correction_factor",
+   "fieldtype": "Float",
+   "label": "Factor de Correcci\u00f3n por Temperatura"
+  },
+  {
+   "fieldname": "column_break_zvzp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Si est\u00e1 activo, un ticket puede consumirse en m\u00faltiples despachos hasta agotar la cantidad autorizada",
+   "fieldname": "allow_partial_dispatch",
+   "fieldtype": "Check",
+   "label": "Permitir Despacho Parcial"
+  },
+  {
+   "default": "0",
+   "description": "Activa la correcci\u00f3n volum\u00e9trica por temperatura al registrar mediciones f\u00edsicas en el cierre diario",
+   "fieldname": "apply_temp_correction",
+   "fieldtype": "Check",
+   "label": "Aplicar Correcci\u00f3n por Temperatura"
+  },
+  {
+   "description": "Cu\u00e1ntos d\u00edas antes del vencimiento el sistema cambia el ticket a \"Pr\u00f3ximo a Vencer\" y env\u00eda notificaci\u00f3n",
+   "fieldname": "days_before_expiry_alert",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "D\u00edas de Alerta Antes de Vencer",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "description": "Estaci\u00f3n/tanque que se preselecciona al crear una solicitud si el usuario no especifica otra",
+   "fieldname": "default_fuel_warehouse",
+   "fieldtype": "Link",
+   "label": "Almac\u00e9n por Defecto",
+   "options": "Warehouse"
+  },
+  {
+   "description": "Diferencia m\u00e1xima permitida entre inventario del sistema y medici\u00f3n f\u00edsica antes de requerir aprobaci\u00f3n del supervisor en el cierre",
+   "fieldname": "max_daily_variance_pct",
+   "fieldtype": "Percent",
+   "label": "Varianza Diaria M\u00e1xima (%)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_nihu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "ID de la llave HMAC activa para firmar los tokens QR. Debe coincidir con una entrada en site_config.json bajo fuel_qr_keys",
+   "fieldname": "qr_key_id",
+   "fieldtype": "Data",
+   "label": "ID de Llave QR Activa",
+   "reqd": 1
+  },
+  {
+   "description": "Intentos fallidos consecutivos por usuario/IP antes de aplicar bloqueo temporal",
+   "fieldname": "max_failed_scans",
+   "fieldtype": "Int",
+   "label": "M\u00e1x. Escaneos Fallidos",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_nfah",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Segundos que tiene el despachador para confirmar el despacho despu\u00e9s de escanear el QR antes de que el session token expire",
+   "fieldname": "dispatch_session_ttl",
+   "fieldtype": "Int",
+   "label": "TTL de Sesi\u00f3n de Despacho (seg)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "description": "Cantidad m\u00ednima en cualquier tanque antes de disparar la alerta de inventario bajo",
+   "fieldname": "low_stock_threshold",
+   "fieldtype": "Float",
+   "label": "Umbral de Stock Bajo",
+   "non_negative": 1,
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-09-10 16:47:48.326535",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Fuel Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

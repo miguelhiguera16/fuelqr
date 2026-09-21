@@ -1,0 +1,203 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "DES-.YYYY.-.######",
+ "creation": "2026-09-16 08:13:02.357993",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "fuel_ticket",
+  "station",
+  "fuel_item",
+  "qty_dispatched",
+  "identity_ref",
+  "column_break_tmjn",
+  "scanned_at",
+  "vehicle",
+  "uom",
+  "odometer",
+  "column_break_pgjv",
+  "dispatcher",
+  "employee",
+  "qty_authorized",
+  "identity_method",
+  "section_break_vcry",
+  "stock_entry",
+  "column_break_tnpr",
+  "vehicle_log",
+  "section_break_gzyc",
+  "observations",
+  "section_break_mkcd",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_mkcd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Fuel Dispatch",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "fuel_ticket",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Ticket de Combustible",
+   "options": "Fuel Ticket",
+   "reqd": 1
+  },
+  {
+   "fieldname": "station",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "fuel_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Combustible",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_dispatched",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cantidad Despachada",
+   "reqd": 1
+  },
+  {
+   "fieldname": "identity_ref",
+   "fieldtype": "Data",
+   "label": "Referencia de Identidad"
+  },
+  {
+   "fieldname": "column_break_tmjn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "scanned_at",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Escaneado En",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicule",
+   "options": "Vehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Unidad de Medida",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "odometer",
+   "fieldtype": "Float",
+   "label": "Lectura de Od\u00f3metro"
+  },
+  {
+   "fieldname": "column_break_pgjv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dispatcher",
+   "fieldtype": "Link",
+   "label": "Despachador",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Empleado",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_authorized",
+   "fieldtype": "Float",
+   "label": "Cantidad Autorizada",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "identity_method",
+   "fieldtype": "Select",
+   "label": "M\u00e9todo de Verificaci\u00f3n",
+   "options": "\nC\u00e9dula (\u00faltimos 4 d\u00edgitos)\nPIN\nVisual",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_vcry",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Entrada de Inventario",
+   "options": "Stock Entry"
+  },
+  {
+   "fieldname": "column_break_tnpr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle_log",
+   "fieldtype": "Link",
+   "label": "Registro de Veh\u00edculo",
+   "options": "Vehicle Log"
+  },
+  {
+   "fieldname": "section_break_gzyc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "observations",
+   "fieldtype": "Small Text",
+   "label": "Observaciones"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-16 08:19:39.071290",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Fuel Dispatch",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

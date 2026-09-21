@@ -1,0 +1,228 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "autoname": "FTK-.YYYY.-.######",
+ "creation": "2026-09-16 08:00:04.694035",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "uuid",
+  "fuel_request",
+  "employee",
+  "department",
+  "vehicle",
+  "column_break_dmvq",
+  "issued_on",
+  "expires_on",
+  "fuel_item",
+  "station",
+  "qty_authorized",
+  "qty_dispatched",
+  "qty_remaining",
+  "uom",
+  "column_break_cyba",
+  "status",
+  "section_break_pqzr",
+  "cancel_reason",
+  "section_break_iwim",
+  "qr_token",
+  "short_code",
+  "short_code_hash",
+  "column_break_kmcq",
+  "qr_image",
+  "sent_email_on",
+  "section_break_4djg",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_4djg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Fuel Ticket",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "uuid",
+   "fieldtype": "Date",
+   "label": "UUID"
+  },
+  {
+   "fieldname": "column_break_dmvq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cyba",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Creado",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Estado",
+   "options": "\nCreado\nEnviado\nPendiente\nPr\u00f3ximo a Vencer\nVencido\nConsumido\nAnulado",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "fuel_request",
+   "fieldtype": "Link",
+   "label": "Solicitud de Origen",
+   "options": "Fuel Request",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vehicle",
+   "fieldtype": "Link",
+   "label": "Vehicle",
+   "options": "Vehicle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "issued_on",
+   "fieldtype": "Datetime",
+   "label": "Emitido En",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expires_on",
+   "fieldtype": "Datetime",
+   "label": "Vence En",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fuel_item",
+   "fieldtype": "Link",
+   "label": "Combustible",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "station",
+   "fieldtype": "Link",
+   "label": "Estaci\u00f3n",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_authorized",
+   "fieldtype": "Float",
+   "label": "Cantidad Autorizada",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_dispatched",
+   "fieldtype": "Float",
+   "label": "Cantidad Despachada",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty_remaining",
+   "fieldtype": "Float",
+   "label": "Cantidad Restante",
+   "reqd": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "Unidad de Medida",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_pqzr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cancel_reason",
+   "fieldtype": "Small Text",
+   "label": "Motivo de Anulaci\u00f3n"
+  },
+  {
+   "fieldname": "section_break_iwim",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "qr_token",
+   "fieldtype": "Data",
+   "label": "Token QR"
+  },
+  {
+   "fieldname": "short_code",
+   "fieldtype": "Data",
+   "label": "C\u00f3digo Corto"
+  },
+  {
+   "fieldname": "short_code_hash",
+   "fieldtype": "Data",
+   "label": "Hash del C\u00f3digo Corto"
+  },
+  {
+   "fieldname": "column_break_kmcq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qr_image",
+   "fieldtype": "Attach Image",
+   "label": "Imagen QR"
+  },
+  {
+   "fieldname": "sent_email_on",
+   "fieldtype": "Datetime",
+   "label": "Email Enviado En"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-16 08:11:33.233799",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Fuel Ticket",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
