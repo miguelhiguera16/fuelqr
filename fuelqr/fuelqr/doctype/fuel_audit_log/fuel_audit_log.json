@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-22 13:02:10.005266",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "timestamp",
+  "user",
+  "column_break_tiet",
+  "action",
+  "ip_address",
+  "section_break_nwuc",
+  "ref_doctype",
+  "column_break_kwzj",
+  "ref_docname",
+  "section_break_mmnm",
+  "data_json",
+  "section_break_vyxl",
+  "prev_hash",
+  "record_hash"
+ ],
+ "fields": [
+  {
+   "fieldname": "timestamp",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Fecha y Hora",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tiet",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Select",
+   "label": "Acci\u00f3n",
+   "options": "\nCrear\nModificar\nEnviar\nCancelar\nDespachar\nEscanear\nAjuste\nLogin\nLogout",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Usuario",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ip_address",
+   "fieldtype": "Data",
+   "label": "Direcci\u00f3n IP",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_nwuc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "ref_doctype",
+   "fieldtype": "Link",
+   "label": "Tipo de Documento",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_kwzj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ref_docname",
+   "fieldtype": "Dynamic Link",
+   "label": "ID Del Documento",
+   "options": "ref_doctype",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_mmnm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "data_json",
+   "fieldtype": "JSON",
+   "label": "Snapshot (JSON)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_vyxl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "prev_hash",
+   "fieldtype": "Data",
+   "label": "Hash Anterior",
+   "read_only": 1
+  },
+  {
+   "fieldname": "record_hash",
+   "fieldtype": "Data",
+   "label": "Hash del Registro",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-22 13:08:57.067498",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Fuel Audit Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

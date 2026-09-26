@@ -51,7 +51,7 @@
   },
   {
    "fieldname": "uuid",
-   "fieldtype": "Date",
+   "fieldtype": "Data",
    "label": "UUID"
   },
   {
@@ -167,7 +167,7 @@
   },
   {
    "fieldname": "qr_token",
-   "fieldtype": "Data",
+   "fieldtype": "Long Text",
    "label": "Token QR"
   },
   {
@@ -199,7 +199,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-16 08:11:33.233799",
+ "modified": "2026-09-22 15:38:03.462154",
  "modified_by": "Administrator",
  "module": "FuelQR",
  "name": "Fuel Ticket",
