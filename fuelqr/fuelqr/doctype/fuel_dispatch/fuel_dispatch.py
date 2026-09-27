@@ -6,6 +6,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import now_datetime
 
+from fuelqr.fuelqr.doctype.fuel_audit_log.fuel_audit_log import write_log
 
 class FuelDispatch(Document):
 
@@ -22,10 +23,33 @@ class FuelDispatch(Document):
 		self._consume_ticket_qty()
 		self._create_stock_entry()
 		self._create_vehicle_log()
+		write_log(
+			action="Despachar",
+			ref_doctype="Fuel Dispatch",
+			ref_docname=self.name,
+			data={
+				"fuel_ticket": self.fuel_ticket,
+				"vehicle": self.vehicle,
+				"employee": self.employee,
+				"qty_dispatched": self.qty_dispatched,
+				"station": self.station,
+				"identity_method": self.identity_method,
+				"odometer": self.odometer,
+			}
+		)
 
 	def on_cancel(self):
 		self._reverse_ticket_qty()
 		self._cancel_stock_entry()
+		write_log(
+			action="Cancelar",
+			ref_doctype="Fuel Dispatch",
+			ref_docname=self.name,
+			data={
+				"fuel_ticket": self.fuel_ticket,
+				"qty_dispatched": self.qty_dispatched,
+			}
+		)
 
 	# ─── Helpers privados ───────────────────────────────────────────
 

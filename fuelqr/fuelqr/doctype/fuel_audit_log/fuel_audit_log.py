@@ -43,16 +43,16 @@ def write_log(action, ref_doctype=None, ref_docname=None, data=None):
 
 		# Insertar directamente sin pasar por el ORM para evitar hooks
 		frappe.db.sql("""
-			INSERT INTO `tabFuel Audit Log`
+			INSERT INTO "tabFuel Audit Log"
 				(name, creation, modified, modified_by, owner, docstatus,
-				 timestamp, action, user, ip_address,
-				 ref_doctype, ref_docname, data_json,
-				 prev_hash, record_hash)
+				timestamp, action, "user", ip_address,
+				ref_doctype, ref_docname, data_json,
+				prev_hash, record_hash)
 			VALUES
 				(%(name)s, NOW(), NOW(), %(user)s, %(user)s, 0,
-				 %(timestamp)s, %(action)s, %(user)s, %(ip)s,
-				 %(ref_doctype)s, %(ref_docname)s, %(data_json)s,
-				 %(prev_hash)s, %(record_hash)s)
+				%(timestamp)s, %(action)s, %(user)s, %(ip)s,
+				%(ref_doctype)s, %(ref_docname)s, %(data_json)s,
+				%(prev_hash)s, %(record_hash)s)
 		""", {
 			"name":        frappe.generate_hash(length=10),
 			"user":        user,
