@@ -1,0 +1,214 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Despacho — FuelQR{% endblock %}
+
+{% block head_include %}
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a1a2e">
+{% endblock %}
+
+{% block page_content %}
+<div class="app">
+
+    <!-- Header -->
+    <div class="app-header">
+        <div class="brand">⛽ FuelQR</div>
+        <div class="dispatcher-info">
+            <strong>{{ dispatcher_name }}</strong>
+            Despachador
+        </div>
+    </div>
+
+    <div class="app-content">
+
+        <!-- PANTALLA 1: Escanear -->
+        <div class="screen active" id="screen-scan">
+            <div class="card">
+                <div class="card-title">Escanear Ticket QR</div>
+
+                <div class="scanner-area" id="scanner-area">
+                    <video id="scanner-video" playsinline autoplay muted></video>
+                    <div class="scanner-overlay">
+                        <div class="scanner-frame"></div>
+                    </div>
+                </div>
+
+                <p class="scanner-hint">Apunta la cámara al código QR del ticket</p>
+
+                <button class="btn btn-primary" id="btn-start-scan">
+                    📷 Activar Cámara
+                </button>
+                <button class="btn btn-outline" id="btn-stop-scan" style="display:none">
+                    ⏹ Detener Cámara
+                </button>
+            </div>
+
+            <div class="divider">o ingresa el código manualmente</div>
+
+            <div class="card">
+                <div class="input-group">
+                    <label>Código Corto o Token QR</label>
+                    <input type="text" id="manual-code"
+                        placeholder="Ej: wRkk6uAuwx"
+                        autocomplete="off" autocorrect="off" autocapitalize="off">
+                </div>
+                <div class="alert alert-danger" id="scan-error"></div>
+                <button class="btn btn-accent" id="btn-validate-manual">
+                    Validar Código
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 2: Confirmar ticket -->
+        <div class="screen" id="screen-confirm">
+            <div class="card">
+                <div class="card-title">Ticket Validado</div>
+                <div id="ticket-status-badge"></div>
+
+                <div class="info-row">
+                    <span class="info-label">Ticket</span>
+                    <span class="info-value" id="t-name"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Empleado</span>
+                    <span class="info-value" id="t-employee"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Cédula</span>
+                    <span class="info-value" id="t-cedula"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Vehículo</span>
+                    <span class="info-value" id="t-vehicle"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Departamento</span>
+                    <span class="info-value" id="t-department"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Combustible</span>
+                    <span class="info-value" id="t-fuel"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Estación</span>
+                    <span class="info-value" id="t-station"></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Cantidad</div>
+                <div class="info-row">
+                    <span class="info-label">Autorizado</span>
+                    <span class="info-value big" id="t-qty-auth"></span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div class="progress-fill" id="t-progress"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span id="t-qty-dispatched-label"></span>
+                        <span id="t-qty-remaining-label"></span>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Vence</span>
+                    <span class="info-value" id="t-expires"></span>
+                </div>
+            </div>
+
+            <div class="alert alert-warning" id="confirm-warning"></div>
+
+            <button class="btn btn-success" id="btn-proceed">
+                ✓ Proceder al Despacho
+            </button>
+            <button class="btn btn-outline" id="btn-back-scan">
+                ← Cancelar y Escanear Otro
+            </button>
+        </div>
+
+        <!-- PANTALLA 3: Registrar despacho -->
+        <div class="screen" id="screen-dispatch">
+            <div class="card">
+                <div class="card-title">Registrar Despacho</div>
+
+                <div class="input-group">
+                    <label>Galones a Despachar *</label>
+                    <input type="number" id="d-qty"
+                        min="0.1" step="0.1" placeholder="0.0">
+                </div>
+
+                <div class="input-group">
+                    <label>Odómetro del Vehículo</label>
+                    <input type="number" id="d-odometer"
+                        min="0" placeholder="Lectura actual (opcional)">
+                </div>
+
+                <div class="input-group">
+                    <label>Verificación de Identidad *</label>
+                    <select id="d-identity-method">
+                        <option value="Cédula (últimos 4 dígitos)">Cédula (últimos 4 dígitos)</option>
+                        <option value="PIN">PIN</option>
+                        <option value="Visual">Visual</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="d-identity-ref-group">
+                    <label>Referencia *</label>
+                    <input type="text" id="d-identity-ref"
+                        placeholder="Ej: 1234">
+                </div>
+
+                <div class="input-group">
+                    <label>Observaciones</label>
+                    <input type="text" id="d-observations"
+                        placeholder="Opcional">
+                </div>
+            </div>
+
+            <div class="alert alert-danger" id="dispatch-error"></div>
+
+            <button class="btn btn-success" id="btn-submit-dispatch">
+                ⛽ Confirmar Despacho
+            </button>
+            <button class="btn btn-outline" id="btn-back-confirm">
+                ← Volver
+            </button>
+        </div>
+
+        <!-- PANTALLA 4: Éxito -->
+        <div class="screen" id="screen-success">
+            <div class="card" style="text-align: center; padding: 32px 20px;">
+                <div class="success-icon">✓</div>
+                <div class="success-title">Despacho Registrado</div>
+                <div class="success-sub" id="success-message"></div>
+
+                <div class="info-row">
+                    <span class="info-label">No. Despacho</span>
+                    <span class="info-value" id="s-dispatch-name"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Cantidad</span>
+                    <span class="info-value" id="s-qty"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Vehículo</span>
+                    <span class="info-value" id="s-vehicle"></span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="btn-new-dispatch">
+                ⛽ Nuevo Despacho
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div class="screen" id="screen-loading">
+            <div class="loading">
+                <div class="spinner"></div>
+                <span id="loading-text">Validando...</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
