@@ -6,6 +6,8 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today, add_days
 
+from fuelqr.fuelqr.doctype.fuel_audit_log.fuel_audit_log import write_log
+
 
 class FuelRequest(Document):
 
@@ -19,10 +21,27 @@ class FuelRequest(Document):
 
 	def on_submit(self):
 		self.db_set("status", "Aprobada")
+		write_log(
+        action="Enviar",
+        ref_doctype="Fuel Request",
+        ref_docname=self.name,
+        data={
+            "employee": self.employee,
+            "vehicle": self.vehicle,
+            "qty_authorized": self.qty_authorized,
+            "fuel_item": self.fuel_item,
+            "station": self.station,
+        })
 		self._create_fuel_ticket()
 
 	def on_cancel(self):
 		self.db_set("status", "Cancelada")
+		write_log(
+			action="Cancelar",
+			ref_doctype="Fuel Request",
+			ref_docname=self.name,
+			data={"status_prev": "Aprobada"}
+    	)
 		self._cancel_linked_ticket()
 
 	# ─── Helpers privados ───────────────────────────────────────────

@@ -23,14 +23,13 @@ class FuelTicket(Document):
 	def before_submit(self):
 		self._generate_qr_token()
 		self._generate_short_code()
+		self._generate_qr_image()
 		self.status = "Creado"
 
 	def on_cancel(self):
 		if not self.cancel_reason:
 			frappe.throw(_("Debe especificar un motivo de anulación."))
 		self.db_set("status", "Anulado")
-
-	# ─── Helpers privados ───────────────────────────────────────────
 
 	def _set_uuid(self):
 		"""Genera un UUID único para este ticket."""
@@ -115,6 +114,46 @@ class FuelTicket(Document):
 		site_salt = frappe.conf.get("db_password", "default_salt")
 		hash_input = f"{site_salt}:{code}".encode()
 		self.short_code_hash = hashlib.sha256(hash_input).hexdigest()
+
+	def _generate_qr_image(self):
+		"""
+		Genera la imagen PNG del QR y la adjunta al ticket como archivo privado.
+		"""
+		import qrcode
+		import io
+		from PIL import Image
+
+		# Generar el QR
+		qr = qrcode.QRCode(
+			version=None,
+			error_correction=qrcode.constants.ERROR_CORRECT_M,
+			box_size=10,
+			border=4,
+		)
+		qr.add_data(self.qr_token)
+		qr.make(fit=True)
+
+		img = qr.make_image(fill_color="black", back_color="white")
+
+		# Convertir a bytes
+		buffer = io.BytesIO()
+		img.save(buffer, format="PNG")
+		buffer.seek(0)
+
+		# Guardar como archivo privado en Frappe
+		filename = f"qr_{self.name}.png"
+		file_doc = frappe.get_doc({
+			"doctype": "File",
+			"file_name": filename,
+			"attached_to_doctype": "Fuel Ticket",
+			"attached_to_name": self.name,
+			"attached_to_field": "qr_image",
+			"is_private": 1,
+			"content": buffer.read(),
+		})
+		file_doc.save(ignore_permissions=True)
+
+		self.qr_image = file_doc.file_url
 
 
 def create_from_request(fuel_request):

@@ -77,10 +77,12 @@ app_license = "mit"
 # ----------
 
 # add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "fuelqr.utils.jinja_methods",
-# 	"filters": "fuelqr.utils.jinja_filters"
-# }
+jinja = {
+	"methods": [
+        "fuelqr.fuelqr.doctype.fuel_ticket.fuel_ticket_utils.get_qr_image_base64",
+    ]
+	# "filters": "fuelqr.utils.jinja_filters"
+}
 
 # Installation
 # ------------
