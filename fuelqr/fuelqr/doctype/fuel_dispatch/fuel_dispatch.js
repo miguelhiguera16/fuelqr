@@ -22,39 +22,9 @@ frappe.ui.form.on("Fuel Dispatch", {
 			"Consumido":         "green",
 			"Anulado":           "grey"
 		};
-		const color = colors[frm.doc.status] || "grey";
-		frm.page.set_indicator(frm.doc.status, color);
+		// const color = colors[frm.doc.status] || "grey";
+		// frm.page.set_indicator(frm.doc.status, color);
 
-		// Barra de progreso
-		if (frm.doc.qty_authorized && frm.doc.docstatus === 1) {
-			const pct = Math.round((frm.doc.qty_dispatched / frm.doc.qty_authorized) * 100);
-			const barColor = pct >= 100 ? "green" : pct >= 75 ? "orange" : "blue";
-			frm.dashboard.add_progress(
-				__("Consumo: {0} / {1} {2}", [
-					frm.doc.qty_dispatched,
-					frm.doc.qty_authorized,
-					frm.doc.uom
-				]),
-				pct,
-				barColor
-			);
-		}
-
-		// Botón reenviar email
-		if (frm.doc.docstatus === 1 && frm.doc.status !== "Anulado") {
-			frm.add_custom_button(__("Reenviar Email"), () => {
-				frappe.call({
-					method: "fuelqr.fuelqr.doctype.fuel_ticket.fuel_ticket_utils.send_ticket_email",
-					args: { ticket_name: frm.doc.name },
-					callback(r) {
-						if (!r.exc) {
-							frappe.show_alert({ message: __("Email enviado exitosamente"), indicator: "green" });
-							frm.reload_doc();
-						}
-					}
-				});
-			}, __("Acciones"));
-		}
 	},
 
 	// Al seleccionar el ticket — autocompleta todos los campos

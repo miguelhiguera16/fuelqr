@@ -1,0 +1,82 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-09-30 14:13:09.952850",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "account_sid",
+  "from_number",
+  "column_break_wlei",
+  "auth_token",
+  "enabled",
+  "use_whatsapp",
+  "whatsapp_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_sid",
+   "fieldtype": "Data",
+   "label": "Account SID"
+  },
+  {
+   "default": "+1",
+   "fieldname": "from_number",
+   "fieldtype": "Data",
+   "label": "N\u00famero de Twilio"
+  },
+  {
+   "fieldname": "column_break_wlei",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auth_token",
+   "fieldtype": "Data",
+   "label": "Auth Token"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Habilitado"
+  },
+  {
+   "default": "0",
+   "fieldname": "use_whatsapp",
+   "fieldtype": "Check",
+   "label": "Usar Whatsapp"
+  },
+  {
+   "fieldname": "whatsapp_from",
+   "fieldtype": "Data",
+   "label": "N\u00famero WhatsApp"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-09-30 14:43:22.885042",
+ "modified_by": "Administrator",
+ "module": "FuelQR",
+ "name": "Twilio Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

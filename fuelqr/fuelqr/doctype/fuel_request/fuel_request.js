@@ -1,51 +1,85 @@
-// Copyright (c) 2026, FuelQR and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on("Fuel Request", {
 
-	// Al abrir un documento nuevo
 	onload(frm) {
 		if (frm.is_new()) {
 			frm.set_value("request_date", frappe.datetime.get_today());
-			frm.set_value("status", "Draft");
 			frm.set_value("request_type", "Manual");
 		}
 	},
 
-	// Al seleccionar vehículo — autocompleta departamento, combustible y UOM
-	vehicle(frm) {
-		if (!frm.doc.vehicle) return;
+	refresh(frm) {
+		frm.set_query("station", () => {
+			return {
+				filters: {
+					"disabled": 0,
+					"is_group": 0,
+				}
+			};
+		});
 
-		frappe.db.get_value(
-			"Vehicle",
-			frm.doc.vehicle,
-			["department", "fuel_item", "uom", "status", "tank_capacity"],
-			(r) => {
-				if (!r) return;
+		// El vehículo se resuelve automáticamente desde el empleado
+		frm.set_df_property("vehicle", "read_only", 1);
+		frm.set_df_property("department", "read_only", 1);
+		frm.set_df_property("fuel_item", "read_only", 1);
+		frm.set_df_property("uom", "read_only", 1);
+	},
 
-				frm.set_value("department", r.department);
-				frm.set_value("fuel_item", r.fuel_item);
-				frm.set_value("uom", r.uom);
+	// Al seleccionar el empleado — busca su vehículo asignado y autocompleta todo
+	employee(frm) {
+		if (!frm.doc.employee) {
+			frm.set_value("vehicle", "");
+			frm.set_value("department", "");
+			frm.set_value("fuel_item", "");
+			frm.set_value("uom", "");
+			return;
+		}
 
-				// Advertencia si el vehículo no está activo
-				if (r.status && r.status !== "Activo") {
+		frappe.call({
+			method: "frappe.client.get_list",
+			args: {
+				doctype: "Vehicle",
+				filters: { employee: frm.doc.employee },
+				fields: ["name", "department", "fuel_item", "uom", "status", "tank_capacity", "license_plate"],
+				limit_page_length: 1
+			},
+			callback(r) {
+				if (!r.message || r.message.length === 0) {
+					frappe.msgprint({
+						title: __("Sin vehículo asignado"),
+						message: __("El empleado {0} no tiene ningún vehículo asignado.", [frm.doc.employee]),
+						indicator: "red"
+					});
+					frm.set_value("vehicle", "");
+					frm.set_value("department", "");
+					frm.set_value("fuel_item", "");
+					frm.set_value("uom", "");
+					return;
+				}
+
+				const v = r.message[0];
+
+				frm.set_value("vehicle",     v.name);
+				frm.set_value("department",  v.department);
+				frm.set_value("fuel_item",   v.fuel_item);
+				frm.set_value("uom",         v.uom);
+
+				if (v.status && v.status !== "Activo") {
 					frappe.msgprint({
 						title: __("Vehículo no disponible"),
-						message: __("El vehículo {0} tiene estado: {1}", [frm.doc.vehicle, r.status]),
+						message: __("El vehículo {0} ({1}) tiene estado: {2}", [v.name, v.license_plate, v.status]),
 						indicator: "red"
 					});
 				}
 
-				// Mostrar capacidad del tanque como referencia en el campo qty_authorized
-				if (r.tank_capacity) {
+				if (v.tank_capacity) {
 					frm.set_df_property(
 						"qty_authorized",
 						"description",
-						__("Capacidad del tanque: {0} {1}", [r.tank_capacity, frm.doc.uom || ""])
+						__("Capacidad del tanque de {0}: {1} {2}", [v.license_plate, v.tank_capacity, v.uom || ""])
 					);
 				}
 			}
-		);
+		});
 	},
 
 	// Al cambiar la fecha de solicitud — recalcula valid_until
@@ -61,7 +95,6 @@ frappe.ui.form.on("Fuel Request", {
 			});
 	},
 
-	// Advertencia visual si la cantidad supera la capacidad del tanque
 	qty_authorized(frm) {
 		if (!frm.doc.qty_authorized || !frm.doc.vehicle) return;
 

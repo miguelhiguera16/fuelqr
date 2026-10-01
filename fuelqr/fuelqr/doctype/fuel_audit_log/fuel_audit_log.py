@@ -27,7 +27,7 @@ def write_log(action, ref_doctype=None, ref_docname=None, data=None):
 	try:
 		timestamp = str(frappe.utils.now_datetime())
 		user      = frappe.session.user
-		data_json = json.dumps(data or {}, default=str, ensure_ascii=False)
+		data_json = frappe.as_json(data or {})
 
 		# Obtener el hash del último registro para encadenar
 		last_hash = frappe.db.get_value(

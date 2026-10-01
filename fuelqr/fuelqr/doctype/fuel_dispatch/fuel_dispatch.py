@@ -23,6 +23,7 @@ class FuelDispatch(Document):
 		self._consume_ticket_qty()
 		self._create_stock_entry()
 		self._create_vehicle_log()
+		self.db_set("status", "Confirmado")
 		write_log(
 			action="Despachar",
 			ref_doctype="Fuel Dispatch",
@@ -37,10 +38,14 @@ class FuelDispatch(Document):
 				"odometer": self.odometer,
 			}
 		)
+		# El QR usado en este despacho ya no debe servir: se destruye y,
+		# si queda saldo, se genera uno nuevo y se reenvía al empleado.
+		frappe.get_doc("Fuel Ticket", self.fuel_ticket).rotate_qr()
 
 	def on_cancel(self):
 		self._reverse_ticket_qty()
 		self._cancel_stock_entry()
+		self.db_set("status", "Anulado")
 		write_log(
 			action="Cancelar",
 			ref_doctype="Fuel Dispatch",
@@ -50,6 +55,9 @@ class FuelDispatch(Document):
 				"qty_dispatched": self.qty_dispatched,
 			}
 		)
+		# Si el saldo vuelve a estar disponible pero el ticket se había
+		# quedado sin QR (porque se consumió), hay que emitirle uno nuevo.
+		frappe.get_doc("Fuel Ticket", self.fuel_ticket).rotate_qr()
 
 	# ─── Helpers privados ───────────────────────────────────────────
 
@@ -130,8 +138,6 @@ class FuelDispatch(Document):
 			as_dict=True
 		)
 
-		# Si qty_dispatched no cambió, el WHERE no se cumplió
-		expected_dispatched = (ticket_data.qty_remaining + self.qty_dispatched)
 		if ticket_data.qty_dispatched < self.qty_dispatched:
 			frappe.throw(
 				_("No se pudo consumir el ticket {0}. Verifique el estado y saldo disponible.").format(
@@ -150,10 +156,11 @@ class FuelDispatch(Document):
 		ticket = frappe.get_doc("Fuel Ticket", self.fuel_ticket)
 
 		se = frappe.new_doc("Stock Entry")
-		se.stock_entry_type = "Material Issue"
+		se.stock_entry_type = "Salida de Material"
 		se.posting_date = frappe.utils.today()
 		se.posting_time = frappe.utils.nowtime()
 		se.remarks = _("Despacho de combustible - Ticket {0}").format(self.fuel_ticket)
+		se.fuel_dispatch = self.name
 
 		se.append("items", {
 			"item_code":         ticket.fuel_item,

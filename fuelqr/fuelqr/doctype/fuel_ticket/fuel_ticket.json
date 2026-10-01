@@ -198,8 +198,14 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2026-09-22 15:38:03.462154",
+ "links": [
+  {
+   "group": "Despacho",
+   "link_doctype": "Fuel Dispatch",
+   "link_fieldname": "fuel_ticket"
+  }
+ ],
+ "modified": "2026-09-30 13:34:49.821173",
  "modified_by": "Administrator",
  "module": "FuelQR",
  "name": "Fuel Ticket",

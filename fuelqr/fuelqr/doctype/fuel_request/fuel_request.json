@@ -16,9 +16,9 @@
   "fuel_item",
   "qty_authorized",
   "uom",
-  "station",
   "column_break_uuty",
   "status",
+  "station",
   "section_break_lfoz",
   "justification",
   "section_break_mewr",
@@ -123,10 +123,12 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "Borrador",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Estado",
-   "options": "Draft\nPendiente Aprobaci\u00f3n\nAprobada\nRechazada\nCancelada"
+   "options": "Borrador\nPendiente Aprobaci\u00f3n\nAprobada\nRechazada\nCancelada",
+   "read_only": 1
   },
   {
    "fieldname": "section_break_lfoz",
@@ -141,8 +143,14 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2026-09-16 07:52:17.069612",
+ "links": [
+  {
+   "group": "Ticket",
+   "link_doctype": "Fuel Ticket",
+   "link_fieldname": "fuel_request"
+  }
+ ],
+ "modified": "2026-09-29 22:38:29.166251",
  "modified_by": "Administrator",
  "module": "FuelQR",
  "name": "Fuel Request",
